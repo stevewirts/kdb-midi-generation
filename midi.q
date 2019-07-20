@@ -1,4 +1,4 @@
-// see http://midi.teragonaudio.com/tech/midifile/mthd.htm​
+// see http://midi.teragonaudio.com/tech/midifile.htm
 \c 50 500
 Mthd:0x4d546864;
 MTrk:0x4d54726b;
