@@ -1,5 +1,6 @@
 \l midi.q
-start:64;
+perpetual: 0b;
+starts:62 + til 22;
 steps:1 -1;
 minmax:59 89;
 seq:(0 1 2;0 2 1;1 0 2;1 2 0;2 0 1;2 1 0);
@@ -11,11 +12,17 @@ major:4 3;
 minor:3 4;
 diminished:3 3;
 augment:4 4;
+suspend:5 5;
+trisus:5 6;
+stepsus:2 4;
+chrotri:1 6;
+tristep:2 6;
+chrosus:1 4;
 
 triads:{compdifs each (nts x) combs};
 step:{fx:flip x;flip ((count x)?steps;fx 1; fx 2)};
-filter:{x where { ((min x)>minmax 0)&((max x) < minmax 1)&(first ((1#x)-(-1#x)) in steps) } each x};
-generateline:{start + (+\) raze step 8?triads x};
+filter:{x where { ((min x)>minmax 0)&((max x) < minmax 1)&((first ((1#x)-(-1#x)) in steps)|not perpetual) } each x};
+generateline:{(first 1?starts) + (+\) raze step -8?triads x};
 generatelines:{
  lines:();
  do[y*100;lines,:enlist generateline x];
