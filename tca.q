@@ -1,3 +1,9 @@
+// this is the script that has more
+// knowledge about things music
+// specifically the logic to generate
+// lines based on george garzones
+// triadic chromatic approach
+// http://www.georgegarzone.com/index1.html
 \l midi.q
 perpetual: 0b;
 starts:62 + til 22;
@@ -41,3 +47,10 @@ savelines[`major;100]
 savelines[`minor;100]
 savelines[`diminished;100]
 savelines[`augment;100]
+
+
+`:triads.mid 1: midi 72 + (+\) raze triads`major
+
+n:(72 + (+\) raze {0 0,x[1 2]}each triads`major)
+q)n[4* til 18]:60
+`:triads.mid 1: midi n
