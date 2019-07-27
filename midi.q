@@ -3,6 +3,8 @@
 // the midi function takes a vector of integers
 // that should be between 0 (low C) and 128
 \c 50 500
+bpm:210;
+ppq:96;
 Mthd:0x4d546864;
 MTrk:0x4d54726b;
 endoftrack:0xff2f00;
@@ -10,10 +12,11 @@ spacer:0x00;
 deltatime:0x00c001;
 timesignature:0xff580404021808;
 keysignature:0xff59020000; //c major
-tempo:0xff510305e818;
+tempo:{0xff5103,-3#0x0 vs floor 60000000%x}bpm;
+
 eighthnote:{0x90,"x"$x,0x3630,0x90,"x"$x,0x0000};
-// Mthd,length (6), formattype(1), numberof tracks(1), divisions(60bpm)
-simpleheader:Mthd,0x00000006,0x0001,0x0001,0x0060;
+// Mthd,length (6), formattype(1), numberof tracks(1), 96ppq
+simpleheader:Mthd,0x00000006,0x0001,0x0001,-2#0x0 vs ppq;
 
 notes:{
  raze deltatime,

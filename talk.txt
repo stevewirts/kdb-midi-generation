@@ -1,0 +1,59 @@
+triads e pepe
+
+play on cacio e pepe
+    explain metaphor with italy 
+
+what is triadic chromatic approach
+    a new system for creating unique jazz improvisation lines, a language
+
+what is midi
+    musical  instrument digital interface
+    it is a way to connect musical devices to control one another with midi messages
+        a convenient file format for creating sheet music
+
+this talk is about generating midi files containing streams of notes that conform to george garzones triadic 
+    play a few
+
+met george in nyc 
+    became friends
+        talk about george for a minute
+            stories/pictures, etc
+visited him in rome first told me about an approach he was developing
+    connect triads by 1/2 step don't repeat inversion
+    explain music
+        12 notes
+        what a triad is, quality of triads, etc..
+
+back to london & prolog implementation
+    george didn't like it
+    too much repetition
+
+a few years go by
+another trip to rome
+
+developed the concept
+add other triad types, chromatic exercise
+george made some videos
+
+a few more years
+making a book,
+time to take another crack at it
+"no repetition"
+think of an inversion as a single note instrument not from the perspective of 
+chordal instrument
+you can repeat inversions!
+    there are 2 keys to repetition, inversion and note sequence
+
+first 1995
+he believes he "found" this concept from listening to coltrane so much
+    play a short snippet of coltrane and then george?
+new england conservatory music theory class doing ear training exercises
+    major triad with 1/2 in between sing size
+george can sing this stuff, nobody else can
+he figured alot of this by ear driving back and forth between nyc and boston
+
+second
+randomnivity
+
+anything is trivial once it becomes ovbious
+
