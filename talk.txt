@@ -1,59 +1,93 @@
 triads e pepe
 
+about me
+    I've been a developer in nyc for 25 years, smalltalk java, web/javascript and kdb,
+    I moved to NYC from saint louis specifically to be around the best jazz scene in the world
+    I currently work at kcg doing java, kdb, and web stuff
+    Normally at this point I'd tell people I'm a saxophone player, but george is here :)
+
 play on cacio e pepe
     explain metaphor with italy 
-
-what is triadic chromatic approach
-    a new system for creating unique jazz improvisation lines, a language
+    garzone is clearly an italian name
+    deceptively difficult to get just right
+    
+this talk is about generating midi files containing streams of notes that conform to george garzones triadic 
 
 what is midi
     musical  instrument digital interface
     it is a way to connect musical devices to control one another with midi messages
         a convenient file format for creating sheet music
 
-this talk is about generating midi files containing streams of notes that conform to george garzones triadic 
-    play a few
+what is triadic chromatic approach
+    a new system for creating unique jazz improvisation lines, a language
 
-met george in nyc 
+I met george in nyc
+    short story
+        jules bistro
     became friends
-        talk about george for a minute
-            stories/pictures, etc
-visited him in rome first told me about an approach he was developing
-    connect triads by 1/2 step don't repeat inversion
-    explain music
-        12 notes
+
+talk about george for a minute
+    just starting to be known outside of boston
+    stories/pictures, etc, gigs
+        short story
+            michael brecker
+
+roots of the approach
+    late 1990's
+    he believes he "found" this concept from listening to coltrane so much
+        play a short snippet of coltrane and then george?
+    new england conservatory music theory class doing ear training exercises
+    george can sing this stuff, nobody else could
+    he figured alot of this by ear driving back and forth between nyc and boston
+
+visited him in rome from london where he first told me about an approach he was developing
+    connect major triads by 1/2 step don't repeat inversion
+    explain music stuff enough to understand things
+        12 notes per octave 
         what a triad is, quality of triads, etc..
 
-back to london & prolog implementation
+back in london & the prolog implementation
     george didn't like it
     too much repetition
+    I hadn't really grasped the concept well enough yet
 
-a few years go by
+a few years go by its now 2015
 another trip to rome
+    he went to do several clinics about this approach
+    he developed the concept further
 
-developed the concept
 add other triad types, chromatic exercise
 george made some videos
 
-a few more years
-making a book,
-time to take another crack at it
-"no repetition"
-think of an inversion as a single note instrument not from the perspective of 
-chordal instrument
+here we are now its been a few years again
+    making a book,
+    time to take another crack at it
+    no sonic repetition
+        think of an inversion as a single note instrument not from the perspective of 
+        chordal instrument
+    
 you can repeat inversions!
-    there are 2 keys to repetition, inversion and note sequence
+    there are 2 to avoiding sonic repetition, not only the inversion also note sequence
+    anything is trivial once it becomes ovbious
 
-first 1995
-he believes he "found" this concept from listening to coltrane so much
-    play a short snippet of coltrane and then george?
-new england conservatory music theory class doing ear training exercises
-    major triad with 1/2 in between sing size
-george can sing this stuff, nobody else can
-he figured alot of this by ear driving back and forth between nyc and boston
+diagrams of the "inversions" and the patterns that are non-repetitive across them
 
-second
-randomnivity
+talk about the code now
+    currently 2 small files
+    midi.q
+        domain values
+            notes
+            intervals
+            triads
+        midi function
+            takes a list of integers 0-128, creates a simple midi file
+                the midi file can be imported into all music notation programs
+                can be played by most music players, ie: vnc
+            create a chromatic scale/major scale
+    tca.q 
+        logic to create chromatic lines
+        create a few lines play them
 
-anything is trivial once it becomes ovbious
-
+future things 
+    look at other file formats, maybe a json music format
+                
