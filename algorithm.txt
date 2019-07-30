@@ -1,0 +1,92 @@
+TCA music basics
+    universal music rules
+        -octave is scientific term
+        -each octave is 2* frequency below it
+        -musical cultural dichotomy 
+            -western music 12 divisions per octave (12 semitones)
+            -eastern music (Arab tone system) 24 divisions per octave
+            
+    western music (midi format - Musical Instrument Digital Interface)
+        -semitone is the atomic unit
+        -an octave has 12 semitones, music is base 12
+        -notes are integers between the audible lowest and highest notes 
+        -C is the name of the lowest note
+            1 octave ((#)sharp (b)flat)
+                0   1       2   3       4  5   6       7   8       9  10      11 
+                C  (C# Db)  D  (D# Eb)  E  F  (F# Gb)  G  (G# Ab)  A  (A# Bb) B
+        -c(octave 0) = 0
+            c1 = 12
+            c2 = 24
+            etc
+        -an interval is a number of semitones (a distance)
+        -a triad is a cluster of 3 notes - root, middle, top; (0, and 2 stacked intervals)
+
+bosendofer imperial piano has 8.5 octaves, C0 to C8 + 6, 8 * 12 (semitones per octave) + 6 (semitones)
+thats 0 - 102; midi accomodates 0 - 128
+
+in USA practical range for teaching any horn or saxophone might be
+    60 - 82  //  arbitrary easy to read in sheet music, easy to play on saxophone
+
+an inversion "voicing" is when the notes of a triad are rearranged with respect to which one is on bottom
+-see this as a piano layed out from top to bottom low note at the bottom
+    4    top                   *
+    3    middle           *    *
+    2    root        *    *    * 1st inversion root middle top
+    1    top         *    *3nd inversion (top down an octave) root middle
+    0    middle      *2nd inversion (middle down an octave) (top down an octave) root 
+    
+KDB+ - TCA basics (algorithm starts here)  -----------------------------------------------------
+    -root is always 0
+    -the sum of middle and top intervals must be less than 12 (an octave)
+
+TCA algorithm inputs (reasonable defaults in parens)
+    1) starting note (72)       // middle c
+    2) a triad (0 4 3)          // major "happy" sounding triad 
+    3) count of repeating triads per output line (8)
+    4) the (step) size (1 semitone) between succesive triads; up or down at random
+    5) high low bounds (60 82)  // any line that goes above or below this range is disqualified
+
+-----------------
+
+TCA: pick N random succesive triads, offset up/down by (step) semitones, don't repeat sequence within an inversion
+
+1) generate the inversion rows 
+    3rd inversion   0 1 2
+    2nd inversion   1 2 3
+    1st inversion   2 3 4
+
+2) possible sequences of a triad within an inversion row (root middle top)
+    0 1 2
+    0 2 1
+    1 0 2
+    1 2 0
+    2 0 1
+    2 1 0
+
+2) generate all triad sequence options
+   each inversion row gets indexed with all the possible sequences (18 results)
+    pairs...
+    0 1 2, 0 1 2           0 1 2, 1 2 3           0 1 2, 2 3 4 
+    0 2 1                  0 2 1                  0 2 1
+    1 0 2                  1 0 2                  1 0 2 
+    1 2 0                  1 2 0                  1 2 0
+    2 0 1                  2 0 1                  2 0 1
+    2 1 0                  2 1 0                  2 1 0
+
+    now indexed...
+    0 1 2                  1 2 3                  2 3 4
+    0 2 1                  1 3 2                  2 4 3
+    1 0 2                  2 1 3                  3 2 4
+    1 2 0                  2 3 1                  3 4 2
+    2 0 1                  3 1 2                  4 2 3
+    2 1 0                  3 2 1                  4 3 2
+
+
+
+
+
+
+
+
+
+
