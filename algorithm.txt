@@ -14,34 +14,55 @@ TCA music basics
             1 octave ((#)sharp (b)flat)
                 0   1       2   3       4  5   6       7   8       9  10      11 
                 C  (C# Db)  D  (D# Eb)  E  F  (F# Gb)  G  (G# Ab)  A  (A# Bb) B
-        -c(octave 0) = 0
+        -C(octave 0) = 0
             c1 = 12
             c2 = 24
             etc
         -an interval is a number of semitones (a distance)
         -a triad is a cluster of 3 notes - root, middle, top; (0, and 2 stacked intervals)
 
-bosendofer imperial piano has 8.5 octaves, C0 to C8 + 6, 8 * 12 (semitones per octave) + 6 (semitones)
-thats 0 - 102; midi accomodates 0 - 128
-
-in USA practical range for teaching any horn or saxophone might be
-    60 - 82  //  arbitrary easy to read in sheet music, easy to play on saxophone
+a triad is three notes stacked on one another
+    -the specific distances between its 3 notes are called its quality
+    -this examples illustrates C Major, C Minor, C Diminished, and C Augmented
+11  
+10         
+ 9    Major Minor       Augmented  
+ 8  --------------------| Ab
+ 7  --| G --| G         |   
+ 6    | ----|-----| Gb  |
+ 5    |     |     |     |
+ 4  --| E --|-----|-----| E
+ 3    | ----| Eb -| Eb  |
+ 2    |     |     |     |
+ 1    |     |     |     |
+ 0  --- C --| C --| C --| C   
+                  Diminished
 
 an inversion "voicing" is when the notes of a triad are rearranged with respect to which one is on bottom
--see this as a piano layed out from top to bottom low note at the bottom
+-see this as a piano layed out from top to bottom, low note at the bottom
+-three stacked inversions with the root as the middle note is called an INVERSION LADDER
     4    top                   *
     3    middle           *    *
     2    root        *    *    * 1st inversion root middle top
     1    top         *    *3nd inversion (top down an octave) root middle
     0    middle      *2nd inversion (middle down an octave) (top down an octave) root 
     
+    so
+        3rd inversion   0 1 2
+        2nd inversion   1 2 3
+        1st inversion   2 3 4
+
+bosendofer imperial piano has 8.5 octaves, C0 to C8 + 6, 8 * 12 (semitones per octave) + 6 (semitones)
+thats 0 - 102; midi accomodates 0 - 128
+
+in western music, a practical range for teaching common instrument might be
+    60 - 82  //  arbitrary easy to read in sheet music, easy to play on saxophone
+
 KDB+ - TCA basics (algorithm starts here)  -----------------------------------------------------
-    -root is always 0
-    -the sum of middle and top intervals must be less than 12 (an octave)
 
 TCA algorithm inputs (reasonable defaults in parens)
     1) starting note (72)       // middle c
-    2) a triad (0 4 3)          // major "happy" sounding triad 
+    2) a triad (0 4 7)          // major "happy" sounding triad 
     3) count of repeating triads per output line (8)
     4) the (step) size (1 semitone) between succesive triads; up or down at random
     5) high low bounds (60 82)  // any line that goes above or below this range is disqualified
@@ -50,12 +71,21 @@ TCA algorithm inputs (reasonable defaults in parens)
 
 TCA: pick N random succesive triads, offset up/down by (step) semitones, don't repeat sequence within an inversion
 
-1) generate the inversion rows 
-    3rd inversion   0 1 2
-    2nd inversion   1 2 3
-    1st inversion   2 3 4
+1) select a triad quality, lets say major X:0 4 7
+    layout the inversion ladder, compute the values of each note from the bottom being 0
+    call this l
+        4 top       {12+x[2]-x[1]}  = 14   
+        3 middle    {12}            = 12   
+        2 root      {12-x[2]}       =  5
+        1 top       {x[2]-x[1]}     =  3
+        0 middle    {0}             =  0
 
-2) possible sequences of a triad within an inversion row (root middle top)
+2) compute inversion indexes within an inversion latter
+    0 1 2   3rd
+    1 2 3   2nd
+    2 3 4   1st
+
+3) compute possible sequences of non repeating notes within a triad
     0 1 2
     0 2 1
     1 0 2
@@ -63,17 +93,8 @@ TCA: pick N random succesive triads, offset up/down by (step) semitones, don't r
     2 0 1
     2 1 0
 
-2) generate all triad sequence options
-   each inversion row gets indexed with all the possible sequences (18 results)
-    pairs...
-    0 1 2, 0 1 2           0 1 2, 1 2 3           0 1 2, 2 3 4 
-    0 2 1                  0 2 1                  0 2 1
-    1 0 2                  1 0 2                  1 0 2 
-    1 2 0                  1 2 0                  1 2 0
-    2 0 1                  2 0 1                  2 0 1
-    2 1 0                  2 1 0                  2 1 0
-
-    now indexed...
+4) index each row of #2 with #3, this will yield 18 possiblities
+     call this p, vector of 18 of 3
     0 1 2                  1 2 3                  2 3 4
     0 2 1                  1 3 2                  2 4 3
     1 0 2                  2 1 3                  3 2 4
@@ -81,8 +102,17 @@ TCA: pick N random succesive triads, offset up/down by (step) semitones, don't r
     2 0 1                  3 1 2                  4 2 3
     2 1 0                  3 2 1                  4 3 2
 
+4) draw 8 from #4, then raze them and index into l (#1), then compute deltas
+    call this ii 
+    ii:deltas l raze -8 ? p
+   
+6) set every triad head (every 3rd index) to a random step up or down value
+    ii[3*til[8*3]]: 8 ? -1 1
 
+7) apply sums across ii (#6), and add the starting note
+    ii:72 + sums ii
 
+8) reject for range and ending note, repeat a zillion times
 
 
 
