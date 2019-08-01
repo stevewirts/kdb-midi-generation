@@ -104,10 +104,10 @@ TCA: pick N random succesive triads, offset up/down by (step) semitones, don't r
 
 4) draw 8 from #4, then raze them and index into l (#1), then compute deltas
     call this ii 
-    ii:deltas l raze -8 ? p
+    ii:deltas @[l;q] raze -8 ? p
    
 6) set every triad head (every 3rd index) to a random step up or down value
-    ii[3*til[8*3]]: 8 ? -1 1
+    ii[3*til 8]:8 ? -1 1
 
 7) apply sums across ii (#6), and add the starting note
     ii:72 + sums ii
