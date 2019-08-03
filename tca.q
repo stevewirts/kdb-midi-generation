@@ -75,12 +75,13 @@ q)n[4* til 18]:60
 `:range.mid 1: midi range;
 //
 
-q:deltas 0 4 7;
-ladder:{(0;x 2;12-x 1;12;12+x 2)}
-ladint:{x + til 3} each til 3;
-seq:(0 1 2;0 2 1;1 0 2;1 2 0;2 0 1;2 1 0);
-p:raze ladint@\:seq;
-ii:@[ladder;q] each -8 ? p;
-ii:raze deltas each ii;
-ii[3*til 8]:8 ? -1 1;
-ii:72 + sums ii;
+tq:4 3
+ladder:{(0;x 1;12-x 0;12;12+x 1)}
+ilsi:raze(0 1 2;1 2 3;2 3 4)@\:(0 1 2;0 2 1;1 0 2;1 2 0;2 1 0;2 0 1)
+ili:{1_ deltas x} each ladder[q]@ilsi
+raze flip (enlist 8?1 -1),flip -8 ? ili
+
+ii:@[ladder;tq] each -8 ? p
+ii:raze deltas each ii
+ii[3*til 8]:8 ? -1 1
+ii:72 + sums ii

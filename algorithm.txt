@@ -1,13 +1,17 @@
-TCA music basics
-    universal music rules
+computer theory for music people
+    computer people always count things starting at 0
+    * is multiple or "times"
+
+music theory for computer people
+    Basics
         -octave is scientific term
         -each octave is 2* frequency below it
         -musical cultural dichotomy 
             -western music 12 divisions per octave (12 semitones)
             -eastern music (Arab tone system) 24 divisions per octave
             
-    western music (midi format - Musical Instrument Digital Interface)
-        -semitone is the atomic unit
+    Musical Instrument Digital Interface (midi)
+        -semitone (half step) is the atomic unit
         -an octave has 12 semitones, music is base 12
         -notes are integers between the audible lowest and highest notes 
         -C is the name of the lowest note
@@ -18,99 +22,197 @@ TCA music basics
             c1 = 12
             c2 = 24
             etc
+        -bosendofer imperial piano has 8.5 octaves 0 - 102
+            midi accomodates 0 - 128
+        -western music, a practical range is 60 - 85
+            2 octaves easy to read in sheet music, easy to play on saxophone
         -an interval is a number of semitones (a distance)
         -a triad is a cluster of 3 notes - root, middle, top; (0, and 2 stacked intervals)
 
 a triad is three notes stacked on one another
     -the specific distances between its 3 notes are called its quality
-    -this examples illustrates C Major, C Minor, C Diminished, and C Augmented
+    -this examples illustrates the 4 basic triad types with root C
+       
+       quality        music notes     midi note values   interval sizes
+        C Major         C E  G           0 4 7               4 3  
+        C Minor         C Eb G           0 3 7               3 4 
+        C Diminished    C Eb Gb          0 3 6               3 3
+        C Augmented     C E  Ab          0 4 8               4 4
+
+
 11  
 10         
- 9    Major Minor       Augmented  
- 8  --------------------| Ab
- 7  --| G --| G         |   
- 6    | ----|-----| Gb  |
- 5    |     |     |     |
- 4  --| E --|-----|-----| E
- 3    | ----| Eb -| Eb  |
- 2    |     |     |     |
- 1    |     |     |     |
- 0  --- C --| C --| C --| C   
-                  Diminished
+ 9    Major       Minor       Diminished       Augmented  
+ 8  -------------------------------------------| Ab
+ 7  --| G --------| G                          |   
+ 6    | ----------|-----------| Gb             |
+ 5    |           |           |                |
+ 4  --| E --------|-----------|----------------| E
+ 3    | ----------| Eb -------| Eb             |
+ 2    |           |           |                |
+ 1    |           |           |                |
+ 0  --- C --------| C --------| C -------------| C   
+                              
 
-an inversion "voicing" is when the notes of a triad are rearranged with respect to which one is on bottom
--see this as a piano layed out from top to bottom, low note at the bottom
--three stacked inversions with the root as the middle note is called an INVERSION LADDER
-    4    top                   *
-    3    middle           *    *
-    2    root        *    *    * 1st inversion root middle top
-    1    top         *    *3nd inversion (top down an octave) root middle
-    0    middle      *2nd inversion (middle down an octave) (top down an octave) root 
+an inversion is when the notes of a triad are rearranged with respect to which one is on bottom
+    -a triad has 3 notes so it has 3 possible inversions
+    -see this as a piano layed out from top to bottom, low note at the bottom
+    -three stacked inversions with the root as the middle note is called an INVERSION LADDER
+    -there are 5 notes in an inversion ladder
+        
+        4    top                   G
+        3    middle           E    E
+        2    root        C    C    C - 1st inversion root middle top
+        1    top         G    G - 3nd inversion (top down an octave) root middle
+        0    middle      E - 2nd inversion (middle down an octave) (top down an octave) root 
     
     so
         3rd inversion   0 1 2
         2nd inversion   1 2 3
         1st inversion   2 3 4
 
-bosendofer imperial piano has 8.5 octaves, C0 to C8 + 6, 8 * 12 (semitones per octave) + 6 (semitones)
-thats 0 - 102; midi accomodates 0 - 128
 
-in western music, a practical range for teaching common instrument might be
-    60 - 82  //  arbitrary easy to read in sheet music, easy to play on saxophone
+Triadic Chromatic Approach basic rules
+    construct music "lines" by connecting random triads of the same quality
+    random means to select at random an inversion and a note sequence 
+    * you can repeat an inversion but note ordering within the inversion must be different from the previous triad
+    consecutive triads start on a note that is up or down 1 semitone from last note of previous triad
+        if the last note of a triad is G, the next triad must start on a Gb(F#) or a Ab(G#)
+        these notes (Gb or Ab) can be the root middle or top of the next triad
 
-KDB+ - TCA basics (algorithm starts here)  -----------------------------------------------------
+there are 18 possible note sequences for 1 triad of any quality
+    these are called INVERSION LADDER SEQUENCE INDEXES
+    
+    2nd inversion          3rd inversion          1st inversion               
+        0 1 2                  1 2 3                  2 3 4
+        0 2 1                  1 3 2                  2 4 3
+        1 0 2                  2 1 3                  3 2 4
+        1 2 0                  2 3 1                  3 4 2
+        2 0 1                  3 1 2                  4 2 3
+        2 1 0                  3 2 1                  4 3 2
+
 
 TCA algorithm inputs (reasonable defaults in parens)
     1) starting note (72)       // middle c
-    2) a triad (0 4 7)          // major "happy" sounding triad 
+    2) a triad (4 3)            // major "happy" sounding triad expressed as 2 stacked interval sizes
     3) count of repeating triads per output line (8)
     4) the (step) size (1 semitone) between succesive triads; up or down at random
-    5) high low bounds (60 82)  // any line that goes above or below this range is disqualified
+    5) high low bounds (60 85)  // any line that goes above or below this range is disqualified
 
 -----------------
 
 TCA: pick N random succesive triads, offset up/down by (step) semitones, don't repeat sequence within an inversion
 
-1) select a triad quality, lets say major X:0 4 7
-    layout the inversion ladder, compute the values of each note from the bottom being 0
-    call this l
-        4 top       {12+x[2]-x[1]}  = 14   
-        3 middle    {12}            = 12   
-        2 root      {12-x[2]}       =  5
-        1 top       {x[2]-x[1]}     =  3
-        0 middle    {0}             =  0
+1) select a triad quality, lets say major 4 3
+    compute the inversion ladder
+        ladder:{(0;x 1;12-x 0;12;12+x 1)}
+        tq:4 3
+        il:ladder tq
+            4 top       12 + tq[1]        = 15   
+            3 middle    12                = 12   
+            2 root      12 - tq[0]        =  8
+            1 top       tq[1]             =  3
+            0 middle    0                 =  0
 
-2) compute inversion indexes within an inversion latter
-    0 1 2   3rd
-    1 2 3   2nd
-    2 3 4   1st
+2) compute the inversion ladder sequence indexes
+    ilsi:raze(0 1 2;1 2 3;2 3 4)@\:(0 1 2;0 2 1;1 0 2;1 2 0;2 1 0;2 0 1)
+    
+        0 1 2
+        0 2 1
+        1 0 2
+        1 2 0
+        2 1 0
+        2 0 1
+        1 2 3
+        1 3 2
+        2 1 3
+        2 3 1
+        3 2 1
+        3 1 2
+        2 3 4
+        2 4 3
+        3 2 4
+        3 4 2
+        4 3 2
+        4 2 3
 
-3) compute possible sequences of non repeating notes within a triad
-    0 1 2
-    0 2 1
-    1 0 2
-    1 2 0
-    2 0 1
-    2 1 0
+2) apply the 18 inversion ladder sequence indexes to our inversion ladder il (0 3 8 12 15)
+    il @ ilsi
 
-4) index each row of #2 with #3, this will yield 18 possiblities
-     call this p, vector of 18 of 3
-    0 1 2                  1 2 3                  2 3 4
-    0 2 1                  1 3 2                  2 4 3
-    1 0 2                  2 1 3                  3 2 4
-    1 2 0                  2 3 1                  3 4 2
-    2 0 1                  3 1 2                  4 2 3
-    2 1 0                  3 2 1                  4 3 2
+        0  3  8
+        0  8  3
+        3  0  8
+        3  8  0
+        8  0  3
+        8  3  0
 
-4) draw 8 from #4, then raze them and index into l (#1), then compute deltas
-    call this ii 
-    ii:deltas @[l;q] raze -8 ? p
-   
-6) set every triad head (every 3rd index) to a random step up or down value
-    ii[3*til 8]:8 ? -1 1
+        3  8  12
+        3  12 8
+        8  3  12
+        8  12 3
+        12 3  8
+        12 8  3
+        
+        8  12 15
+        8  15 12
+        12 8  15
+        12 15 8
+        15 8  12
+        15 12 8
 
-7) apply sums across ii (#6), and add the starting note
-    ii:72 + sums ii
+3) compute the INVERSION LADDER INTERVALS from this
+    ili:{1_ deltas x} each il@ilsi
+
+        3  5
+        8  -5
+        -3 8
+        5  -8
+        -5 -3
+        -8 3
+
+        5  4
+        9  -4
+        -5 9
+        4  -9
+        -4 -5
+        -9 5
+        4  3
+
+        7  -3
+        -4 7
+        3  -7
+        -3 -4
+        -7 4
+
+
+4) a random triad is now (-1 or 1) and one of the inversion ladder interval from (3)
+        
+        -1 7 -3
+            or
+        -1 7 -3
+
+
+5) repeat (4), 8 times without repeating the same inversion ladder interval
+         flip (enlist 8?1 -1),flip -8 ? ili
+
+            -1 -5 9
+            1  -3 -4
+            1  4  3
+            1  -9 5
+            -1 -7 4
+            1  5  -8
+            -1 3  -7
+            1  9  -4
+
+
+6) raze and scan the sums, replace the first value with 0, add starting note value
+      72 + 0, 1 _ raze sums flip (enlist 8?1 -1),flip -8 ? ili
+
+            72 66 75 76 73 69 70 74 77 78 69 74 73 66 70 71 76 68 67 70 63 64 73 69
+
+
+7) save to disk as a midi file
+    `:line.midi 1: midi 72 + 0, 1 _ raze sums flip (enlist 8?1 -1),flip -8 ? ili
 
 8) reject for range and ending note, repeat a zillion times
 
