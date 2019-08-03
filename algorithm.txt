@@ -3,9 +3,13 @@ computer theory for music people
     * is multiple or "times"
 
 music theory for computer people
-    Basics
+    basics
         -octave is scientific term
-        -each octave is 2* frequency below it
+        -each octave is 2 * frequency of the next below
+            C3 130.81Hz 
+            C2  65.41Hz
+            C1  32.70Hz
+            C0  16.35Hz
         -musical cultural dichotomy 
             -western music 12 divisions per octave (12 semitones)
             -eastern music (Arab tone system) 24 divisions per octave
@@ -26,11 +30,11 @@ music theory for computer people
             midi accomodates 0 - 128
         -western music, a practical range is 60 - 85
             2 octaves easy to read in sheet music, easy to play on saxophone
-        -an interval is a number of semitones (a distance)
-        -a triad is a cluster of 3 notes - root, middle, top; (0, and 2 stacked intervals)
+        -an interval is a number of semitones (a distance) between 2 notes
+        -a triad is a cluster of 3 notes - root, middle, top; (2 stacked intervals)
 
 a triad is three notes stacked on one another
-    -the specific distances between its 3 notes are called its quality
+    -the specific distances between its 3 notes determine its QUALITY
     -this examples illustrates the 4 basic triad types with root C
        
        quality        music notes     midi note values   interval sizes
@@ -45,10 +49,10 @@ a triad is three notes stacked on one another
  9    Major       Minor       Diminished       Augmented  
  8  -------------------------------------------| Ab
  7  --| G --------| G                          |   
- 6    | ----------|-----------| Gb             |
+ 6  --| ----------|-----------| Gb             |
  5    |           |           |                |
  4  --| E --------|-----------|----------------| E
- 3    | ----------| Eb -------| Eb             |
+ 3  --| ----------| Eb -------| Eb             |
  2    |           |           |                |
  1    |           |           |                |
  0  --- C --------| C --------| C -------------| C   
@@ -76,7 +80,7 @@ Triadic Chromatic Approach basic rules
     construct music "lines" by connecting random triads of the same quality
     random means to select at random an inversion and a note sequence 
     * you can repeat an inversion but note ordering within the inversion must be different from the previous triad
-    consecutive triads start on a note that is up or down 1 semitone from last note of previous triad
+    consecutive triads start on a note that is up or down 1 semitone from last note of the previous triad
         if the last note of a triad is G, the next triad must start on a Gb(F#) or a Ab(G#)
         these notes (Gb or Ab) can be the root middle or top of the next triad
 
