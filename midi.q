@@ -2,8 +2,10 @@
 // simple midi generation of 8th note streams
 // the midi function takes a vector of integers
 // that should be between 0 (low C) and 128
-\c 50 500
-bpm:210;
+
+\d .midi
+
+bpm:120;
 ppq:96;
 Mthd:0x4d546864;
 MTrk:0x4d54726b;
@@ -34,6 +36,7 @@ midi:{
     body: notes x;
     raze simpleheader,MTrk,(0x0 vs "i"$count body),body}
 
+\d .
 /
 
 / 6 notes ascending chromatically from middle c
