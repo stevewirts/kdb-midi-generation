@@ -186,8 +186,8 @@ TCA: pick N random successive triads, offset up/down by (step) semitones, don't 
         4  -9
         -4 -5
         -9 5
+        
         4  3
-
         7  -3
         -4 7
         3  -7
