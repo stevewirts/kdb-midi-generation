@@ -1,17 +1,29 @@
 triads e pepe
 
+this talk is about generating midi files containing streams of notes that conform to george garzones triadic 
+    play head to have you met miss jones
+    play one line that sort of sounds like this
+
 about me
-    I've been a developer in nyc for 25 years, smalltalk java, web/javascript and kdb,
-    I moved to NYC from saint louis specifically to be around the best jazz scene in the world
-    I currently work at kcg doing java, kdb, and web stuff
-    Normally at this point I'd tell people I'm a saxophone player, but george is here :)
+    career
+        I've been a developer in nyc for 25 years, smalltalk java, web/javascript and kdb,
+        I currently work at kcg doing java, kdb, and web stuff
+
+    jazz
+        I moved to NYC from saint louis specifically to be around the best jazz scene in the world
+        Normally at this point I'd tell people I'm a saxophone player, but george is here :)
+
+about george
+    world renown musician
+    faculty at Berklee, New England Conservatory, NYU, Manhattan School of Music, The New School
+    historic significant innovater
 
 play on cacio e pepe
-    explain metaphor with italy 
-    garzone is clearly an italian name
+
+    lotsa italian going on with george, he talks with his hands
+    george's TCA is about triads, cacio e pepe 3 ingredients
+    anything is trivial once it becomes obvious
     deceptively difficult to get just right
-    
-this talk is about generating midi files containing streams of notes that conform to george garzones triadic 
 
 what is midi
     musical  instrument digital interface
@@ -60,18 +72,25 @@ add other triad types, chromatic exercise
 george made some videos
 
 here we are now its been a few years again
-    making a book,
+    making a book
     time to take another crack at it
     no sonic repetition
         think of an inversion as a single note instrument not from the perspective of 
         chordal instrument
     
 you can repeat inversions!
-    there are 2 to avoiding sonic repetition, not only the inversion also note sequence
+    there are 2 keys to avoiding hearing repetition, inversion and order of the notes played within
     anything is trivial once it becomes ovbious
 
-diagrams of the "inversions" and the patterns that are non-repetitive across them
+visualizing the problem
+    there three notes in any triad you can start on
+    there are 6 possible permutations of these 3 notes
+      (pictures here)
 
+OMG moment
+    the next triad can be any 18 of any of permutations, just not the previous one
+        better than that, don't use any of the previous ones (use draw instead of pick)
+ 
 talk about the code now
     currently 2 small files
     midi.q
@@ -81,13 +100,14 @@ talk about the code now
             triads
         midi function
             takes a list of integers 0-128, creates a simple midi file
-                the midi file can be imported into all music notation programs
+                the midi file can be imported into any music notation program
                 can be played by most music players, ie: vnc
             create a chromatic scale/major scale
     tca.q 
         logic to create chromatic lines
         create a few lines play them
 
+
+
 future things 
-    look at other file formats, maybe a json music format
-                
+    
