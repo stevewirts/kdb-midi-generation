@@ -125,27 +125,29 @@ TCA: pick N random successive triads, offset up/down by (step) semitones, don't 
             0 middle    0                 =  0
 
 2) compute the inversion ladder sequence indexes
+    ilsi:raze(0 1 2;1 2 3;2 3 4)@\:(0 1 2;0 2 1;1 0 2;1 2 0;2 1 0;2 0 1)
+        or   
     prm:{x{,/(>:'t=/:t:*x)@\:x:0,'1+x}/,!0}  // permutations
-    ilsi:raze(0 1 2;1 2 3;2 3 4)@\:(0 1 2;0 2 1;1 0 2;1 2 0;2 1 0;2 0 1)   or   raze til[3]+\:prm 3
+    ilsi: raze til[3]+\:prm 3
     
         0 1 2
         0 2 1
         1 0 2
         1 2 0
-        2 1 0
         2 0 1
+        2 1 0
         1 2 3
         1 3 2
         2 1 3
         2 3 1
-        3 2 1
         3 1 2
+        3 2 1
         2 3 4
         2 4 3
         3 2 4
         3 4 2
-        4 3 2
         4 2 3
+        4 3 2
 
 3) apply the 18 inversion ladder sequence indexes to our inversion ladder il (0 3 8 12 15)
     il @ ilsi
