@@ -18,12 +18,12 @@ triads:(!). flip (
  (`augmented;4 4);
  (`sus;5 5);
  (`onefour;1 4);
- (`onesix;1 6)
+ (`onesix;1 6);
+ (`sustri;5 6)
  );
 
-ladder:{(0;x 1;12-x 0;12;12+x 1)}
-k) prm:{x{,/(>:'t=/:t:*x)@\:x:0,'1+x}/,!0} // permutations
-//ilsi:raze(0 1 2;1 2 3;2 3 4)@\:(0 1 2;0 2 1;1 0 2;1 2 0;2 1 0;2 0 1) // inversion ladder sequence indexes
+ladder:{(0;x 0;sum x;12;12+x 0)}
+k)prm:{x{,/(>:'t=/:t:*x)@\:x:0,'1+x}/,!0} // permutations
 ilsi:raze til[3]+\:prm 3; // inversion ladder sequence indexes
 generateline:{sums first[1?startnote],1 _ raze flip (enlist numtriads?1 -1),flip neg[numtriads] ? {1_ deltas x} each ladder[triads x]@ilsi}
 generatelines:{
